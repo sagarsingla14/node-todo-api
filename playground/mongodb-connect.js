@@ -22,7 +22,9 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
     console.log(JSON.stringify(result.ops,undefined,3));
     console.log(result.ops[0]._id.getTimestamp());
   });
-
+  for(int i=0;i<10;i++){
+    console.log(1);
+  }
   client.close();
 });
 
