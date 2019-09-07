@@ -6,7 +6,20 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
   }
   console.log('Connected Successfully to Mongo Server');
   const db = client.db('TodoApp');
-  db.collection('Users').find().toArray().then((docs) => {
+  // toArray parse data into Object of Arrays
+
+  db.collection('Users').find({
+    Age : 20
+  }).toArray().then((docs) => {
+    console.log(docs);
+  } , (err) => {
+    console.log('Unable to Fetch the data');
+  });
+
+
+  db.collection('Users').find({
+    Name : 'Sagar Singla'
+  }).toArray().then((docs) => {
     console.log(docs);
   } , (err) => {
     console.log('Unable to Fetch the data');
