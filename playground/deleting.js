@@ -6,11 +6,20 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) =>{
   }
   console.log('Server Connected Successfully !!');
 
+  // deleteMany()
   const db = client.db('TodoApp');
   db.collection('Users').deleteMany({
     Name : 'Sagar Singla'
   }).then((result) => {
     console.log(result);
   });
+
+  // DeleteOne()
+  db.collection('Users').deleteOne({
+    Age : 19
+  }).then((result) => {
+    console.log(result);
+  });
+
   
 });
