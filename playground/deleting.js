@@ -7,11 +7,12 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) =>{
   console.log('Server Connected Successfully !!');
 
   // deleteMany()
-  const db = client.db('TodoApp');
+  const db = client.db('TodoApp');8
+
   db.collection('Users').deleteMany({
     Name : 'Sagar Singla'
   }).then((result) => {
-    console.log(result);
+    console.log(JSON.stringify(result));
   });
 
   // DeleteOne()
@@ -23,8 +24,8 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) =>{
 
   // findOneAndDelete
   db.collection('Users').findOneAndDelete({
-    Age : 20
+    Name : 'A1'
   }).then((result) => {
-    console.log(result);
+    console.log(JSON.stringify(result));
   });
 });
