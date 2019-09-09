@@ -7,7 +7,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) =>{
   console.log('Server Connected Successfully !!');
 
   // deleteMany()
-  const db = client.db('TodoApp');8
+  const db = client.db('TodoApp');
 
   db.collection('Users').deleteMany({
     Name : 'Sagar Singla'
