@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 
 
 var {mongoose} = require('./db/mongoose');
-var {todo} = require('./models/todo');
+var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
 
 
@@ -13,6 +13,14 @@ app.use(bodyParser.json());
 
 app.post('/todos', (req , res) => {
   console.log(req.body);
+  var todo = new Todo({
+    text : req.body.text
+  });
+  todo.save().then((docs) => {
+    console.log(JSON.stringify(docs, undefined, 2));
+  }, (e) => {
+    console.log(e);
+  });
 });
 
 app.listen(3000 , () => {

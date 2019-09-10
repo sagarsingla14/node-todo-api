@@ -9,3 +9,5 @@ var User = mongoose.model('User', {
     minlemgth : 1
   }
 });
+
+module.exports = {User};

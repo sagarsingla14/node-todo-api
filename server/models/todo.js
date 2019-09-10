@@ -14,3 +14,5 @@ var Todo = mongoose.model('Todo' , {
     Default : null
   }
 });
+
+module.exports = {Todo};
