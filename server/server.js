@@ -1,53 +1,20 @@
-const mongoose = require('mongoose');
-const {mongodb , ObjectID} = require('mongodb');
-
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/TodoApp');
+var express = require('express');
+var bodyParser = require('body-parser');
 
 
-var Todo = mongoose.model('Todo' , {
-  text : {
-    type : String ,
-    required : true
-  } ,
-  completed : {
-    type : Boolean,
-    Default : false
-  } ,
-  completedAt : {
-    type : Number ,
-    Default : null
-  }
+var {mongoose} = require('./db/mongoose');
+var {todo} = require('./models/todo');
+var {User} = require('./models/user');
+
+
+var app = express();
+
+app.use(bodyParser.json());
+
+app.post('/todos', (req , res) => {
+  console.log(req.body);
 });
 
-var newTodo = new Todo({
-  text : 'Cook Dinner',
-  completed : false,
-  completedAt : 1
-});
-
-newTodo.save().then((docs) => {
-  console.log(JSON.stringify(docs));
-}, (err) => {
-  console.log('Unable to save ! ' , err);
-});
-
-// Added Validators and Defaults
-var User = mongoose.model('User', {
-  email : {
-    type : String,
-    required : true,
-    trim : true,
-    minlemgth : 1
-  }
-});
-
-var user = new User({
-  email : 'sagar@example.com'
-});
-
-user.save().then((docs) => {
-  console.log(JSON.stringify(docs , undefined , 2));
-},(err) => {
-  console.log('Unable to Save', e);
+app.listen(3000 , () => {
+  console.log('Started on port 3000');
 });
