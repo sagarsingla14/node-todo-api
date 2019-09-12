@@ -16,8 +16,8 @@ describe('POST /todos' , () => {
       expect(res.body.text).toBe(text);
     })
     .end((err , res) => {
-      if(err) {
-        return done(err);
+      if(err){
+        done(err);
       }
       Todo.find().then((docs) => {
         expect(docs.length).toBe(1);
