@@ -12,11 +12,21 @@ app.use(bodyParser.json());
 
 app.post('/todos', (req , res) => {
   var todo = new Todo({
-    text : req.body.text
+    text : req.body.text,
+    completed : req.body.completed,
+    completedAt : req.body.completedAt
   });
   todo.save().then((docs) => {
     res.send(docs)
   }, (e) => {
+    res.status(400).send(e);
+  });
+});
+
+app.get('/todos' , (req , res) => {
+  Todo.find().then((docs) => {
+    res.send(docs);
+  } ,(e) => {
     res.status(400).send(e);
   });
 });
