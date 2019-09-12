@@ -6,7 +6,6 @@ var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
 
-
 var app = express();
 
 app.use(bodyParser.json());
@@ -16,9 +15,9 @@ app.post('/todos', (req , res) => {
     text : req.body.text
   });
   todo.save().then((docs) => {
-    console.log(JSON.stringify(docs, undefined, 2));
+    res.send(docs)
   }, (e) => {
-    console.log(e);
+    res.status(400).send(e);
   });
 });
 
