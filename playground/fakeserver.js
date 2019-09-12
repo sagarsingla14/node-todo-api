@@ -9,6 +9,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/FakeData');
 
 var app = express();
+
 app.use(bodyParser.json());
 
 app.post('/fake' , (req , res) => {

@@ -7,8 +7,6 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
   console.log('Connected Successfully to Mongo Server');
   const db = client.db('TodoApp');
 
-
-
   // Count Function Counts the Docs in the Current Database
   console.log('Counting Docs ');
   db.collection('Users').find().count().then((count) => {
@@ -27,7 +25,6 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
     console.log('Unable to Fetch the data');
   });
 
-
   db.collection('Users').find({
     Name : 'Sagar Singla'
   }).toArray().then((docs) => {
@@ -36,5 +33,4 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
     console.log('Unable to Fetch the data');
   });
   client.close();
-
 });
