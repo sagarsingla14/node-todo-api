@@ -31,8 +31,8 @@ app.get('/todos' , (req , res) => {
   });
 });
 
-// Getting An individual response
 
+// Getting An individual response
 app.get('/todos/:id' , (req , res) => {
   var id = req.params.id;
   if(! ObjectId.isValid(id)){
