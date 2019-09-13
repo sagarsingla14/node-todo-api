@@ -5,6 +5,8 @@ var {ObjectId} = require('mongodb');
 
 var {app} = require('./../server');
 var {Todo} = require('./../models/todo');
+
+
 var todos = [{
   _id : new ObjectId(),
   text : 'First test Todo'
@@ -38,7 +40,7 @@ describe('POST /todos' , () => {
       if(err){
         return done(err);
       }
-      Todo.find().then((docs) => {
+      Todo.find({text}).then((docs) => {
         expect(docs.length).toBe(1);
         expect(docs[0].text).toBe(text);
         done();
@@ -73,7 +75,7 @@ describe('Testing /GET' , () => {
     .expect((res) => {
       expect(res.body.todos.length).toBe(2);
       done();
-    }).end(done);
+    }).end();
     done();
   });
 });
