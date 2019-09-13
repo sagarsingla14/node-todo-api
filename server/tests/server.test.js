@@ -4,6 +4,11 @@ const request = require('supertest');
 var {app} = require('./../server');
 var {Todo} = require('./../models/todo');
 
+beforeEach((done) => {
+  Todo.remove({});
+  done();
+});
+
 describe('POST /todos' , () => {
   it('Should create a new Todo' , (done) => {
     var text = 'Add it to the Postman';
@@ -17,7 +22,7 @@ describe('POST /todos' , () => {
     })
     .end((err , res) => {
       if(err){
-        done(err);
+        return done(err);
       }
       Todo.find().then((docs) => {
         expect(docs.length).toBe(1);
@@ -25,6 +30,7 @@ describe('POST /todos' , () => {
         done();
       }).catch((e) => done(e));
     });
+    done();
   });
 
   it('Should not create a Node with invalid data' , (done) => {
@@ -36,11 +42,11 @@ describe('POST /todos' , () => {
       if(err) {
         return done(err);
       }
-
       Todo.find().then((docs) => {
         expect(docs.length).toBe(0);
         done();
       }).catch((e) => done(e));
     });
+    done();
   });
 });
