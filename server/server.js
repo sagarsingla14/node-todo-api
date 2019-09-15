@@ -8,10 +8,9 @@ var {User} = require('./models/user');
 
 var app = express();
 
-const port = process.env.PORT || 3000;
-
 app.use(bodyParser.json());
 
+// Posting a todo into Database
 app.post('/todos', (req , res) => {
   var todo = new Todo({
     text : req.body.text,
@@ -25,6 +24,7 @@ app.post('/todos', (req , res) => {
   });
 });
 
+// Getting all Todos to client
 app.get('/todos' , (req , res) => {
   Todo.find().then((docs) => {
     res.send({docs});
@@ -50,9 +50,22 @@ app.get('/todos/:id' , (req , res) => {
   });
 });
 
+// Deletion using mongoose
+app.delete('/todos/:id' , (req , res) => {
+  var id = req.params.id;
+  if(!ObjectId.isValid(id)){
+    return res.status(404).send();
+  }
+  Todo.findByIdAndRemove(id).then((docs) => {
+    if(!docs){
+      return res.status(404).send();
+    }
+    res.send({docs});
+  });
+});
 
-app.listen(port , () => {
-  console.log('Started on port '+ port);
+app.listen(3000 , () => {
+  console.log('Started on port 3000');
 });
 
 module.exports = {

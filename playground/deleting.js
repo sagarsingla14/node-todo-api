@@ -1,3 +1,5 @@
+// Deletion in mongoDB
+
 const {MongoClient, ObjectID} = require('mongoDB');
 
 MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) =>{
