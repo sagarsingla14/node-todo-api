@@ -1,18 +1,18 @@
 const expect = require('expect');
 const request = require('supertest');
 
-var {ObjectId} = require('mongodb');
+var {ObjectID} = require('mongodb');
 
 var {app} = require('./../server');
 var {Todo} = require('./../models/todo');
 
 
 var todos = [{
-  _id : new ObjectId(),
+  _id : new ObjectID(),
   text : 'First test Todo'
 },
 {
-  _id : new ObjectId(),
+  _id : new ObjectID(),
   text : 'Second test Todo'
 }];
 
@@ -22,8 +22,6 @@ beforeEach((done) => {
   });
   done();
 });
-
-
 
 describe('POST /todos' , () => {
   it('Should create a new Todo' , (done) => {
@@ -80,8 +78,8 @@ describe('Testing /GET' , () => {
   });
 });
 
-var id = todos[0]._id;
 describe('GET /todos/:id' ,() => {
+  var id = todos[0]._id.toHexString();
   it('Should return todo doc' , (done) => {
     request(app)
       .get('/todos/' + id)
@@ -104,11 +102,51 @@ describe('GET /todos/:id' ,() => {
   });
 
   it('Should return 404 if todo is not found' , (done) => {
-    id = new ObjectId();
+    id = new ObjectID();
     request(app)
       .get('/todos/' + id)
       .expect(404)
       .end();
       done();
+  });
+});
+
+
+describe('Testing Delete' , () => {
+  var id = todos[0]._id.toHexString();
+  it('Should test Delete /todoid' , (done) => {
+    request(app)
+      .delete(`/todos/${id}`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.todo._id).toBe(id);
+      })
+      .end((e , res) => {
+        if(e){
+          return done(e);
+        }
+
+        Todo.findById(id).then((todo) => {
+          expect(todo).toNotExist();
+          done();
+        }).catch((e) => done(e));
+      });
+      done();
+  });
+
+  id = new ObjectID().toHexString();
+  it('If id is not found then error 404' , (done) => {
+    request(app)
+      .delete(`/todos/${id}`)
+      .expect(404)
+      .end();
+      done();
+  });
+
+  it('Should test if id is not valid erorr 404' , (done) => {
+    request(app)
+      .delete('/todos/23112acsc')
+      .expect(404)
+      .end(done);
   });
 });
