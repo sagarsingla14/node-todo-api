@@ -6,7 +6,6 @@ var {ObjectID} = require('mongodb');
 var {app} = require('./../server');
 var {Todo} = require('./../models/todo');
 
-
 var todos = [{
   _id : new ObjectID(),
   text : 'First test Todo'
@@ -22,6 +21,8 @@ beforeEach((done) => {
   });
   done();
 });
+
+
 
 describe('POST /todos' , () => {
   it('Should create a new Todo' , (done) => {
@@ -102,7 +103,7 @@ describe('GET /todos/:id' ,() => {
   });
 
   it('Should return 404 if todo is not found' , (done) => {
-    id = new ObjectID();
+    id = new ObjectId();
     request(app)
       .get('/todos/' + id)
       .expect(404)
@@ -119,7 +120,7 @@ describe('Testing Delete' , () => {
       .delete(`/todos/${id}`)
       .expect(200)
       .expect((res) => {
-        expect(res.body.todo._id).toBe(id);
+        expect(res.body.todos._id).toBe(id);
       })
       .end((e , res) => {
         if(e){
