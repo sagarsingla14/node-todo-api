@@ -35,11 +35,10 @@ app.get('/todos' , (req , res) => {
   });
 });
 
-
 // Getting An individual response
 app.get('/todos/:id' , (req , res) => {
   var id = req.params.id;
-  if(! ObjectId.isValid(id)){
+  if(! ObjectID.isValid(id)){
     return res.status(404).send();
   }
   Todo.findById(id).then((todo) => {
@@ -55,7 +54,7 @@ app.get('/todos/:id' , (req , res) => {
 // Deletion using mongoose
 app.delete('/todos/:id' , (req , res) => {
   var id = req.params.id;
-  if(!ObjectId.isValid(id)){
+  if(!ObjectID.isValid(id)){
     return res.status(404).send();
   }
 
@@ -83,7 +82,6 @@ app.patch('/todos/:id' , (req , res) => {
     body.completed = false;
     body.completedAt = null;
   }
-
 
   Todo.findByIdAndUpdate(id , {$set : body} , {new : true}).then((docs) => {
     if(! docs) {
