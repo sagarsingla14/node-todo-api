@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const {SHA256} = require('crypto-js');
+const jwt = require('jsonwebtoken');
 const validator = require('validator');
 
-// Added Validators and Defaults
-var User = mongoose.model('User', {
+var UserSchema = new mongoose.Schema({
   email : {
     type : String,
     required : true,
@@ -30,5 +31,20 @@ var User = mongoose.model('User', {
     }
   }]
 });
+
+UserSchema.methods.generateAuthToken = function () {
+  var user = this;
+  var access = 'auth';
+  var token = jwt.sign({_id : user._id.toHexString() , access} , 'Secret').toString();
+  console.log(token);
+  user.tokens.push({access  ,token});
+
+  return user.save().then(() => {
+    return token;
+  });
+}
+
+// Added Validators and Defaults
+var User = mongoose.model('User', UserSchema);
 
 module.exports = {User};
