@@ -21,7 +21,7 @@ else{
 }
 
 // jwt.sign
-var token = jwt.sign(data , 'secret');
+var token = jwt.sign(data , 'secret'); 
 console.log(token);
 
 var decode = jwt.verify(token, 'secret');
